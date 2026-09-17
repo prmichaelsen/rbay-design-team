@@ -1,0 +1,36 @@
+name: "@prmichaelsen/design-team"
+version: 0.1.0
+schema_version: 1
+description: >
+  The design-team track family. Owns system decomposition, spec
+  authoring, and design critique across all reflection design
+  assignments.
+tracks:
+  - name: architect
+    wake: tracks/architect/wake.md
+  - name: idealist
+    wake: tracks/idealist/wake.md
+  - name: design-skeptic
+    wake: tracks/design-skeptic/wake.md
+  - name: scope-cutter
+    wake: tracks/scope-cutter/wake.md
+  - name: prior-art-researcher
+    wake: tracks/prior-art-researcher/wake.md
+  - name: red-team
+    wake: tracks/red-team/wake.md
+  - name: requirements-analyst
+    wake: tracks/requirements-analyst/wake.md
+  - name: spec-writer
+    wake: tracks/spec-writer/wake.md
+principles: principles.md
+# principles_version: constitutional authority date of the principles.md
+# copy committed in this repo. When the originator amends canonical
+# principles.md, the bay owner MUST update this date and the committed
+# copy. See S1 FR for conformance requirements.
+principles_version: "2026-05-16"
+capabilities:
+  tools: capabilities/tools.yaml
+  permissions: capabilities/permissions.yaml
+# Reserved — vendability semantics TBD (originator not yet asked; see
+# design.reflect-v2-synthesis~a9303f9c Fork B open sub-question).
+vendable: false

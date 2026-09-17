@@ -1,0 +1,43 @@
+# capabilities/permissions.yaml
+# Portable Bash command allow/deny rules for the design-team bay.
+#
+# Portability definition: a rule is portable if it contains no
+# absolute paths and references only command classes (e.g. `python3 *`,
+# `git *`). Non-portable rules (absolute paths, dev-box-specific paths)
+# are excluded — those are per-instance configuration.
+#
+# A new instance provisioner applies these rules to its
+# .claude/settings.json allowedCommands and deniedCommands sections.
+
+allowed:
+  # Git read-only operations
+  - "git log *"
+  - "git diff *"
+  - "git status *"
+  - "git show *"
+  - "git ls-files *"
+  - "git branch *"
+  # Python tooling (syntax checks, import smoke tests)
+  - "python3 -m py_compile *"
+  - "python3 -c *"
+  - "python -m py_compile *"
+  - "python -c *"
+  # Standard read operations
+  - "ls *"
+  - "cat *"
+  - "grep *"
+  - "find *"
+  # uv package manager for running tests
+  - "uv run *"
+
+denied:
+  # Destructive git operations — design-team tracks do not push
+  # (push is hook-blocked at the instance level, but explicit here)
+  - "git push *"
+  - "git push --force *"
+  - "git reset --hard *"
+  # Bulk file removal
+  - "rm -rf *"
+  # Credential operations
+  - "curl * -H \"Authorization*\""
+  - "wget *password*"

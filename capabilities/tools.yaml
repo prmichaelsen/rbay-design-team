@@ -1,0 +1,31 @@
+# capabilities/tools.yaml
+# Tool category allowlist for the design-team bay.
+# All tracks in this bay may invoke tools in the listed categories.
+#
+# Vocabulary is a normative closed enum (v0.1 per S1 spec):
+#   bash-read    Read-only shell (cat, ls, grep, git log, etc.)
+#   bash-write   Shell with write access (all bash commands)
+#   web-fetch    HTTP read (WebFetch / browser_fetch)
+#   scry-mcp     Scry knowledge-graph tools (scry_sql, scry_mint)
+#   payment-api  Payment integration (Stripe or equivalent)
+#   image-gen    Image generation tools
+#
+# Unknown categories are a validation error. Extensions require a
+# spec amendment to S1.
+#
+# Note: SDK file-operation tools (Read, Write, Edit, Glob, Grep) are
+# BASELINE capabilities — always granted regardless of this file.
+# tools.yaml governs elevated categories only; baseline tools are
+# not listed here and MUST NOT require a tools.yaml entry.
+
+allowed_categories:
+  - bash-read    # read-only shell: cat, ls, grep(1), git log/diff/status
+  - bash-write   # write-access shell: git commit/add, shell file edits
+  - web-fetch    # WebFetch, browser_fetch — prior-art-researcher
+                 # and any track that needs external documentation
+  - scry-mcp     # scry_sql, scry_mint, scry_grep — all tracks use
+                 # the knowledge graph for orientation and memory
+
+# Not included — design-team has no need for these:
+#   payment-api  No billing or Stripe integration in the design team
+#   image-gen    No image generation in the design team

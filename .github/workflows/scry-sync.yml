@@ -1,0 +1,185 @@
+name: scry-sync
+
+# Fires on every merge to main. Parses all @scry.entry markers in the
+# bay definition repo and POSTs the results to the control-plane sync
+# endpoint. This lets the control-plane keep its knowledge graph in sync
+# with the committed bay definition.
+#
+# MVP PLACEHOLDER: SYNC_ENDPOINT is a placeholder until the Cloudflare
+# Worker is deployed. The implementer replaces the placeholder URL with
+# the real Worker URL after Phase 2 of the reflect-v2 MVP is complete.
+#
+# AUTH: The Worker validates a Bearer token on every incoming POST.
+# Before the CI job can sync to a live endpoint, the provisioner MUST:
+#   1. Generate a random API key (e.g. openssl rand -hex 32).
+#   2. Set it as a Cloudflare Worker secret named SYNC_API_KEY via S3
+#      provisioning tooling (wrangler secret put SYNC_API_KEY).
+#   3. Add a GitHub Actions secret named SYNC_API_KEY on this repo with
+#      the same value.
+# During the placeholder phase, the SYNC_API_KEY secret value is unused
+# (the endpoint URL is dead), but the injection point is wired so the
+# CI job is auth-ready the moment the real Worker URL is substituted.
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SYNC_ENDPOINT: https://PLACEHOLDER.workers.dev/scry-sync
+  SYNC_API_KEY: ${{ secrets.SYNC_API_KEY }}
+
+jobs:
+  scry-sync:
+    name: Parse markers and sync to control-plane
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Parse @scry.entry markers
+        id: parse
+        run: |
+          python3 - <<'EOF'
+          import json
+          import re
+          import os
+          import yaml
+          from pathlib import Path
+
+          results = []
+          root = Path(".")
+
+          for path in root.rglob("*.md"):
+              text = path.read_text(encoding="utf-8")
+              # Find all @scry.entry blocks
+              blocks = re.findall(
+                  r"<!--\s*@scry\.entry\s+(.*?)@scry\.entry\.end\s*-->",
+                  text, re.DOTALL
+              )
+              for block in blocks:
+                  entry = {"current_path": str(path)}
+                  try:
+                      # Parse the full marker block as YAML. This handles
+                      # both inline tags: ["a", "b"] and block-list
+                      # tags:\n  - "a"\n  - "b" formats natively, satisfying
+                      # the dual-format requirement in S1.
+                      data = yaml.safe_load(block)
+                      if not isinstance(data, dict) or "id" not in data:
+                          continue
+                      entry["id"] = str(data["id"])
+                      entry["kind"] = str(data.get("kind", ""))
+                      entry["status"] = str(data.get("status", ""))
+                      # Flatten summary (YAML folds multi-line > strings)
+                      summary = data.get("summary", "")
+                      entry["summary"] = " ".join(
+                          str(summary).split()
+                      ) if summary else ""
+                      # tags: list — yaml.safe_load resolves both inline
+                      # and block-list formats to a Python list directly.
+                      tags = data.get("tags", [])
+                      entry["tags"] = list(tags) if isinstance(tags, list) else []
+                  except yaml.YAMLError:
+                      # Fallback: extract id via regex so the entry is not
+                      # silently dropped on parse error.
+                      m = re.search(r"^id:\s*(\S+)", block, re.MULTILINE)
+                      if not m:
+                          continue
+                      entry["id"] = m.group(1)
+                  if "id" in entry:
+                      results.append(entry)
+
+          output = json.dumps(results, indent=2)
+          with open("scry_markers.json", "w") as f:
+              f.write(output)
+
+          print(f"Parsed {len(results)} @scry.entry markers")
+          print(output[:2000])  # Log first 2000 chars for inspection
+          EOF
+
+      - name: Read bay.yaml for metadata
+        id: bay_meta
+        # FR-BAYNAME-SOURCE: bay_name MUST be derived from bay.yaml:name at
+        # sync time. Do NOT source bay_name from CI env vars, workflow-level
+        # config, or any source other than the bay definition file itself.
+        # A CI job that allows bay_name to be configured independently of
+        # bay.yaml:name is non-conformant per S1 FR-BAYNAME-SOURCE.
+        run: |
+          python3 - <<'EOF'
+          import yaml, json, os
+          with open("bay.yaml") as f:
+              bay = yaml.safe_load(f)
+          print("bay_name=" + bay.get("name", "unknown"))
+          print("bay_version=" + bay.get("version", "0.0.0"))
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write("bay_name=" + bay.get("name", "unknown") + "\n")
+              out.write("bay_version=" + bay.get("version", "0.0.0") + "\n")
+          EOF
+
+      - name: POST markers to sync endpoint
+        env:
+          BAY_NAME: ${{ steps.bay_meta.outputs.bay_name }}
+          BAY_VERSION: ${{ steps.bay_meta.outputs.bay_version }}
+          # push_ts: the HEAD commit's causal-ordering timestamp (not the CI
+          # job execution time). For GitHub Actions this is the commit
+          # timestamp. For other CI providers, use the equivalent commit
+          # timestamp field (e.g. GitLab CI: $CI_COMMIT_TIMESTAMP).
+          PUSH_TS: ${{ github.event.head_commit.timestamp }}
+        run: |
+          python3 - <<'EOF'
+          import json, os, urllib.request, urllib.error
+
+          endpoint = os.environ["SYNC_ENDPOINT"]
+          bay_name = os.environ["BAY_NAME"]
+          bay_version = os.environ["BAY_VERSION"]
+          push_ts = os.environ.get("PUSH_TS", "")
+
+          with open("scry_markers.json") as f:
+              markers = json.load(f)
+
+          payload = {
+              "bay_name": bay_name,
+              "version": bay_version,
+              "push_ts": push_ts,
+              "markers": markers,
+          }
+
+          body = json.dumps(payload).encode("utf-8")
+          api_key = os.environ.get("SYNC_API_KEY", "")
+          headers = {"Content-Type": "application/json"}
+          if api_key:
+              headers["Authorization"] = f"Bearer {api_key}"
+          req = urllib.request.Request(
+              endpoint,
+              data=body,
+              headers=headers,
+              method="POST",
+          )
+
+          try:
+              with urllib.request.urlopen(req, timeout=30) as resp:
+                  status = resp.getcode()
+                  print(f"POST {endpoint} → {status}")
+          except urllib.error.HTTPError as e:
+              print(f"POST {endpoint} → HTTP {e.code}: {e.reason}")
+              raise
+          except urllib.error.URLError as e:
+              print(f"POST {endpoint} failed: {e.reason}")
+              # During MVP placeholder period, treat connection failure
+              # as non-fatal so CI does not block merges on a dead endpoint.
+              if "PLACEHOLDER" in endpoint:
+                  print("Endpoint is placeholder — skipping failure")
+              else:
+                  raise
+          EOF
