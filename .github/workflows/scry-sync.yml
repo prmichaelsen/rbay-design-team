@@ -5,20 +5,15 @@ name: scry-sync
 # endpoint. This lets the control-plane keep its knowledge graph in sync
 # with the committed bay definition.
 #
-# MVP PLACEHOLDER: SYNC_ENDPOINT is a placeholder until the Cloudflare
-# Worker is deployed. The implementer replaces the placeholder URL with
-# the real Worker URL after Phase 2 of the reflect-v2 MVP is complete.
+# Live endpoint: Cloudflare Worker deployed at
+# https://rbay-design-team-worker.michaelsenpatrick.workers.dev
+# Phase 2 of the reflect-v2 MVP is complete; provisioner ran 2026-09-18.
 #
 # AUTH: The Worker validates a Bearer token on every incoming POST.
-# Before the CI job can sync to a live endpoint, the provisioner MUST:
-#   1. Generate a random API key (e.g. openssl rand -hex 32).
-#   2. Set it as a Cloudflare Worker secret named SYNC_API_KEY via S3
-#      provisioning tooling (wrangler secret put SYNC_API_KEY).
-#   3. Add a GitHub Actions secret named SYNC_API_KEY on this repo with
-#      the same value.
-# During the placeholder phase, the SYNC_API_KEY secret value is unused
-# (the endpoint URL is dead), but the injection point is wired so the
-# CI job is auth-ready the moment the real Worker URL is substituted.
+# To activate: add a GitHub Actions secret named SYNC_API_KEY on this
+# repo with the value from agent/secrets/reflect-v2-sync-api-key on the
+# reflection dev box. The Worker secret (SYNC_API_KEY) is already set —
+# the provisioner wrote it. Only the GitHub side is pending.
 
 on:
   push:
@@ -26,7 +21,7 @@ on:
       - main
 
 env:
-  SYNC_ENDPOINT: https://PLACEHOLDER.workers.dev/scry-sync
+  SYNC_ENDPOINT: https://rbay-design-team-worker.michaelsenpatrick.workers.dev/scry-sync
   SYNC_API_KEY: ${{ secrets.SYNC_API_KEY }}
 
 jobs:
@@ -176,10 +171,5 @@ jobs:
               raise
           except urllib.error.URLError as e:
               print(f"POST {endpoint} failed: {e.reason}")
-              # During MVP placeholder period, treat connection failure
-              # as non-fatal so CI does not block merges on a dead endpoint.
-              if "PLACEHOLDER" in endpoint:
-                  print("Endpoint is placeholder — skipping failure")
-              else:
-                  raise
+              raise
           EOF

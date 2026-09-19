@@ -1,0 +1,6 @@
+# Claude Code orchestrator runtime artifacts
+agent/
+
+# Provisioner output / temp files
+*.pyc
+__pycache__/
