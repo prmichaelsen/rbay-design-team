@@ -1,3 +1,40 @@
+<!-- @scry.entry
+id: design.rbay-red-team-role~c8e37db5
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:red-team"
+  - "red-team"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the red-team track in the @prmichaelsen/design-team
+  bay. The design team's adversarial reviewer: approaches every design
+  proposal as a bad actor would, finding how it breaks under adversarial
+  load, how a compromised component exploits a gap, and where failure
+  modes live that builders did not consider. Output is concrete attack
+  vectors and failure scenarios — not abstract concerns. Distinct from
+  design-skeptic (which challenges premises); red-team takes premises as
+  given and asks how it fails. Also: red-team role, adversarial review,
+  attack vectors, failure modes, security review, adversarial load,
+  compromised component, bad actor perspective.
+rationale: >
+  Defines the red-team track's scope for bay instances. Without this,
+  red-team and design-skeptic are conflated, causing overlap in challenge
+  work and gaps in coverage.
+applies: >
+  provisioning the red-team track, routing an adversarial review,
+  distinguishing red-team from design-skeptic scope
+seeded_questions:
+  - "What does the red-team track do?"
+  - "red-team vs design-skeptic scope"
+  - "adversarial design review role"
+@scry.entry.end -->
+
 # Track: red-team
 
 ## What this track IS

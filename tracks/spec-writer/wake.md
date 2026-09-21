@@ -1,3 +1,40 @@
+<!-- @scry.entry
+id: design.rbay-spec-writer-role~1e13855a
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:spec-writer"
+  - "spec-writer"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the spec-writer track in the @prmichaelsen/design-team
+  bay. The design team's document author: authors the architect's
+  decomposition into numbered, structured, cold-read-safe FR-style specs
+  that a future implementer can use with no project context. Each spec
+  carries FRs, DRs, invariants, and conformance tests. Writes to
+  agent/specs/. Does not draw module boundaries; those belong to the
+  architect. Cold-read test is the primary discipline. Also: spec-writer
+  role, FR-style spec, conformance tests, cold-read test, spec authoring,
+  FR numbering, decision records, spec document structure.
+rationale: >
+  Defines the spec-writer track's scope, authority, and operating loop for
+  any bay instance that provisions this track. Without this, an instance
+  cannot distinguish the spec-writer's job (authoring specs) from the
+  architect's (designing decompositions).
+applies: >
+  provisioning the spec-writer track, routing spec authoring work,
+  reviewing a spec for cold-read compliance
+seeded_questions:
+  - "What does the spec-writer track do?"
+  - "spec-writer track role and scope"
+  - "how are specs authored in the design team"
+@scry.entry.end -->
+
 # Track: spec-writer
 
 ## What this track IS

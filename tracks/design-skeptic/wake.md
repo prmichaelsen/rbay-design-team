@@ -1,3 +1,39 @@
+<!-- @scry.entry
+id: design.rbay-design-skeptic-role~f0325a39
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:design-skeptic"
+  - "design-skeptic"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the design-skeptic track in the
+  @prmichaelsen/design-team bay. The design team's premise-challenger:
+  asks for every significant design decision what assumptions it rests on,
+  whether those assumptions are stated and justified. Challenges premises
+  (not exploits — that is red-team's role). Forces implicit assumptions
+  explicit before they are baked into specs. Distinct from the content-
+  checking skeptic track. Also: design-skeptic role, premise challenge,
+  assumption surfacing, pre-authoring challenge, implicit assumptions,
+  design review, assumption justification.
+rationale: >
+  Defines the design-skeptic track's scope and authority for bay instances.
+  Without this, the distinction between design-skeptic (premise challenge)
+  and red-team (adversarial failure modes) is lost.
+applies: >
+  provisioning the design-skeptic track, routing a design challenge,
+  distinguishing design-skeptic from red-team scope
+seeded_questions:
+  - "What does the design-skeptic track do?"
+  - "design-skeptic vs red-team scope"
+  - "design-skeptic role in design team"
+@scry.entry.end -->
+
 # Track: design-skeptic
 
 ## What this track IS

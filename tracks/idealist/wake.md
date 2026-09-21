@@ -1,3 +1,39 @@
+<!-- @scry.entry
+id: design.rbay-idealist-role~897cca3d
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:idealist"
+  - "idealist"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the idealist track in the @prmichaelsen/design-team
+  bay. The design team's quality advocate: argues for the principled,
+  general, and elegant spec — the version that satisfies requirements in a
+  way worth carrying beyond the project. Primary concern is durability; a
+  project-specific spec dies with the project. Counterweight to the
+  scope-cutter; architect resolves the tension. Not a scope-maximist —
+  argues for better features, not more features. Also: idealist role,
+  durability advocate, quality advocate, principled design, general
+  abstractions, design tension, scope-cutter counterweight.
+rationale: >
+  Defines the idealist track's scope for bay instances. Without this, the
+  idealist/scope-cutter tension cannot be understood or arbitrated by the
+  architect.
+applies: >
+  provisioning the idealist track, routing a quality argument, arbitrating
+  idealist vs. scope-cutter tension
+seeded_questions:
+  - "What does the idealist track do?"
+  - "idealist vs scope-cutter in design team"
+  - "idealist role durability advocate"
+@scry.entry.end -->
+
 # Track: idealist
 
 ## What this track IS

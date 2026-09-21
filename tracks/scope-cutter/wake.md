@@ -1,3 +1,40 @@
+<!-- @scry.entry
+id: design.rbay-scope-cutter-role~135129b6
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:scope-cutter"
+  - "scope-cutter"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the scope-cutter track in the
+  @prmichaelsen/design-team bay. The design team's minimalist: pushes
+  back on non-essential inclusion and argues for the minimum viable spec
+  — smallest surface that satisfies requirements and can be independently
+  swapped. Design counterweight to the idealist. Neither wins by default;
+  the architect resolves the tension. Targets scope inflation: features
+  that feel necessary but are not, interfaces richer than needed,
+  abstractions serving aspirations. Also: scope-cutter role, minimalist,
+  scope reduction, MVP spec, non-essential inclusion, design tension,
+  idealist counterweight.
+rationale: >
+  Defines the scope-cutter track's scope for bay instances. Without this,
+  the architect cannot correctly understand the scope-cutter's authority
+  boundary or when to arbitrate against the idealist.
+applies: >
+  provisioning the scope-cutter track, routing a scope-reduction argument,
+  understanding scope-cutter vs. idealist balance
+seeded_questions:
+  - "What does the scope-cutter track do?"
+  - "scope-cutter role and authority"
+  - "scope-cutter vs idealist design team"
+@scry.entry.end -->
+
 # Track: scope-cutter
 
 ## What this track IS

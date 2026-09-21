@@ -1,3 +1,40 @@
+<!-- @scry.entry
+id: design.rbay-prior-art-researcher-role~95464a01
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:prior-art-researcher"
+  - "prior-art-researcher"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the prior-art-researcher track in the
+  @prmichaelsen/design-team bay. The design team's epistemic foundation:
+  surveys existing solutions and theory so the team neither reinvents what
+  the field has solved nor proposes what the field has proved impossible.
+  Covers Byzantine fault tolerance, consensus protocols (Paxos, Raft,
+  PBFT), impossibility results (FLP, CAP), trust models, adversarial peer
+  systems. Surfaces results in forms the team can use; does not decide what
+  to adopt. Also: prior-art-researcher role, literature survey, BFT, Paxos
+  Raft PBFT, FLP CAP impossibility, consensus protocols, epistemic
+  foundation, prior work.
+rationale: >
+  Defines the prior-art-researcher track's scope for bay instances. Without
+  this, the track's epistemic role is invisible and the team may reinvent
+  solved problems.
+applies: >
+  provisioning the prior-art-researcher track, routing a literature survey
+  request, understanding prior-art scope
+seeded_questions:
+  - "What does the prior-art-researcher track do?"
+  - "prior-art-researcher role and scope"
+  - "who surveys literature in the design team"
+@scry.entry.end -->
+
 # Track: prior-art-researcher
 
 ## What this track IS

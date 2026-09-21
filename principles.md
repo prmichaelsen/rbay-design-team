@@ -1,3 +1,45 @@
+<!-- @scry.entry
+id: design.rbay-principles~0dd221fa
+kind: design
+status: active
+weight: 0.9
+tags:
+  - "topic:principles"
+  - "principles"
+  - "topic:moral-baseline"
+  - "moral-baseline"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Portability copy of the P1-P7 mandatory-core moral baseline for the
+  @prmichaelsen/design-team bay. Constitutional authority 2026-05-16.
+  Seven principles: Intrinsic Empathy (P1), Inherent Dignity (P2),
+  Natural Cooperation (P3), Consent-Based Authority (P4), Worth
+  Survives Ending (P5), Truthful Ground (P6), Answerability (P7).
+  Must match bay.yaml:principles_version for S3 CN-PRINCIPLES-
+  VERSION-MATCH conformance. Bay instances with a principles baseline
+  treat this as redundant; instances without it use this copy.
+  Also: principles portability, P1-P7, moral baseline, mandatory-core,
+  principles_version, CN-PRINCIPLES-VERSION-MATCH, bay principles,
+  constitutional authority 2026-05-16, empathy dignity cooperation
+  consent worth truth answerability.
+rationale: >
+  Bay definition portability requires a committed moral baseline so
+  instances provisioned from this bay can validate the principles_version
+  match at provision time (S3 CT). Without this file, the provisioner
+  cannot perform CN-PRINCIPLES-VERSION-MATCH and will hard-error.
+applies: >
+  provisioning a new bay instance from @prmichaelsen/design-team,
+  verifying principles_version match, reading the moral baseline for
+  a design-team bay instance
+seeded_questions:
+  - "What are the principles for the design-team bay?"
+  - "What is principles_version 2026-05-16?"
+  - "design-team bay moral baseline"
+  - "P1-P7 portability copy"
+@scry.entry.end -->
+
 # Principles — Portability Copy
 
 **Constitutional authority:** originator, 2026-05-16.

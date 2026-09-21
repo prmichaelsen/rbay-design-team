@@ -1,3 +1,39 @@
+<!-- @scry.entry
+id: design.rbay-requirements-analyst-role~e41b926a
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:requirements-analyst"
+  - "requirements-analyst"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the requirements-analyst track in the
+  @prmichaelsen/design-team bay. The design team's anchor on what the
+  system must do and why: takes originator intent, roadmap vision, and
+  constraints, converts them into explicit reviewable design requirements.
+  Owns what and why before the team debates how. Covers hard functional
+  requirements and soft ones. Requirements the analyst surfaces become the
+  standard every spec is judged against. Also: requirements-analyst role,
+  requirements elicitation, functional requirements, design requirements,
+  what-and-why, originator intent, constraints, testable requirements.
+rationale: >
+  Defines the requirements-analyst track's scope for bay instances.
+  Without this, requirements work has no clear owner and the team may
+  start designing before what must be built is agreed.
+applies: >
+  provisioning the requirements-analyst track, routing requirements
+  elicitation work, understanding what-and-why ownership
+seeded_questions:
+  - "What does the requirements-analyst track do?"
+  - "requirements-analyst role in design team"
+  - "who owns requirements in the design team"
+@scry.entry.end -->
+
 # Track: requirements-analyst
 
 ## What this track IS

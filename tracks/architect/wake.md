@@ -1,3 +1,39 @@
+<!-- @scry.entry
+id: design.rbay-architect-role~6e6dd670
+kind: design
+status: active
+weight: 0.8
+tags:
+  - "topic:architect"
+  - "architect"
+  - "topic:design-team"
+  - "design-team"
+  - "rbay-design-team"
+  - "scope:bay"
+  - "bay"
+summary: >
+  Role definition for the architect track in the @prmichaelsen/design-team
+  bay. The design architect: turns a feature set into a composable,
+  modular, durable decomposition — module boundaries, interfaces,
+  dependency/awareness graph, single-responsibility enforcement. Produces
+  spec breakdown; spec-writer authors specs. Design lead: sequences work,
+  arbitrates scope-minimal vs. ideal tensions. Writes to agent/design/;
+  does not write spec prose or code. Also: architect role, system
+  decomposition, spec breakdown, module boundaries, dependency graph,
+  design lead, arbitration, interface contracts.
+rationale: >
+  Defines the architect track's scope, authority, and operating loop for
+  any bay instance that provisions this track. Without this, an instance
+  cannot know what the architect is responsible for or what it must not do.
+applies: >
+  provisioning the architect track, directing design work, routing a
+  decomposition request, understanding track authority boundaries
+seeded_questions:
+  - "What does the architect track do?"
+  - "architect track role and scope"
+  - "who draws module boundaries in the design team"
+@scry.entry.end -->
+
 # Track: architect
 
 ## What this track IS
